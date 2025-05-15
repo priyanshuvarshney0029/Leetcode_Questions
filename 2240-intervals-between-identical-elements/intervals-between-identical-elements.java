@@ -1,6 +1,6 @@
 class Solution {
     public long[] getDistances(int[] arr) {
-       int n = arr.length;
+        int n = arr.length;
         long[] res = new long[n];
 
         // Step 1: Map from value -> list of indices where it appears
@@ -23,9 +23,13 @@ class Solution {
             // Step 3: For each index in the group, calculate contribution
             for (int i = 0; i < m; i++) {
                 int idx = indices.get(i);
-                long leftSum = (i > 0) ? (long) indices.get(i) * i - prefix[i - 1] : 0;
-                long rightSum = (i < m - 1) ? (prefix[m - 1] - prefix[i]) - (long) indices.get(i) * (m - i - 1) : 0;
-                res[idx] = leftSum + rightSum;
+                // ✅ Fix is here
+                long leftsum = (i > 0) ? prefix[i - 1] : 0;
+                long rightsum = prefix[m - 1] - prefix[i];
+                long left_con = (long) indices.get(i)*i-leftsum;
+                long right_con = rightsum - (long) indices.get(i) * (m - i - 1);
+
+                res[idx] = left_con + right_con;
             }
         }
 
