@@ -8,12 +8,11 @@ class Solution {
         }
         int result[]=new int[nums.length];
         for(int i=0;i<nums.length;i++){
-           int left_sum=prefix[i]-nums[i]; // 0 to i-1 ka sum...
+           int left_sum=i >0 ? prefix[i-1]:0; // 0 to i-1 ka sum...
            int right_sum=prefix[n-1]-prefix[i]; // i+1 se lekar n-1 ka sum
 
            result[i]=(nums[i]*i)-left_sum+right_sum-(nums[i]*(n-i-1));
         }
         return result;
-
     }
 }
