@@ -1,6 +1,6 @@
 class Solution {
     public String triangleType(int[] nums) {
-         int sum=nums[1]+nums[2];
+        int sum=nums[1]+nums[2];
         int sum2=nums[0]+nums[1];
         int sum3=nums[0]+nums[2];
      if(nums[0]>=sum){
