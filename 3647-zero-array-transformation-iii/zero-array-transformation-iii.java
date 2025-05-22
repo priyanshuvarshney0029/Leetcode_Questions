@@ -1,12 +1,13 @@
 class Solution {
     public int maxRemoval(int[] nums, int[][] queries) {
-        PriorityQueue<Integer> pq=new PriorityQueue<>(Collections.reverseOrder());
-        PriorityQueue<Integer> pq1=new PriorityQueue<>(); // min heap
+        PriorityQueue<Integer> pq=new PriorityQueue<>(Collections.reverseOrder()); // max heap
+        PriorityQueue<Integer> pq1=new PriorityQueue<>(); //min heap
 
-      Arrays.sort(queries, (a, b) -> a[0] - b[0]);
+        Arrays.sort(queries,(a,b)->a[0]-b[0]);
 
         int trans_count=0;
         int j=0;
+
         for(int i=0;i<nums.length;i++){
             while(j < queries.length && i==queries[j][0]){
                 pq.add(queries[j][1]);
@@ -24,11 +25,13 @@ class Solution {
             if(nums[i]>0){
                 return -1;
             }
-
             while(!pq1.isEmpty() && pq1.peek()==i){
                 pq1.poll();
             }
+
+        
         }
         return queries.length-trans_count;
     }
+
 }
