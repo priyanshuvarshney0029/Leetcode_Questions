@@ -1,38 +1,34 @@
 class Solution {
     public int maxRemoval(int[] nums, int[][] queries) {
-        int n = nums.length;
-        int sz = queries.length;
+        PriorityQueue<Integer> pq=new PriorityQueue<>(Collections.reverseOrder());
+        PriorityQueue<Integer> pq1=new PriorityQueue<>(); // min heap
 
-        Arrays.sort(queries, (a, b) -> Integer.compare(a[0], b[0]));
+      Arrays.sort(queries, (a, b) -> a[0] - b[0]);
 
-        int[] dif = new int[n];
-        int j = 0, cnt = 0, sum = 0;
-
-        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
-
-        for (int i = 0; i < n; i++) {
-            while (j < sz && queries[j][0] <= i) {
-                pq.offer(queries[j][1]);
+        int trans_count=0;
+        int j=0;
+        for(int i=0;i<nums.length;i++){
+            while(j < queries.length && i==queries[j][0]){
+                pq.add(queries[j][1]);
                 j++;
             }
+            nums[i]=nums[i]-pq1.size();
 
-            if (i > 0) dif[i] += dif[i - 1];
-            sum = dif[i];
+            while(nums[i] > 0 && !pq.isEmpty() && pq.peek()>=i){
+                pq1.add(pq.peek());
+                pq.poll();
+                nums[i]--;
+                trans_count++;
+            }
 
-            while (sum < nums[i]) {
-                if (pq.isEmpty()) return -1;
+            if(nums[i]>0){
+                return -1;
+            }
 
-                int a = pq.poll();
-
-                if (a >= i) {
-                    dif[i]++;
-                    if (a + 1 < n) dif[a + 1]--;
-                    sum++;
-                    cnt++;
-                }
+            while(!pq1.isEmpty() && pq1.peek()==i){
+                pq1.poll();
             }
         }
-
-        return sz - cnt;
+        return queries.length-trans_count;
     }
 }
