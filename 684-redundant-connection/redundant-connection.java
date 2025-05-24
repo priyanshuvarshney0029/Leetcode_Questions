@@ -7,6 +7,7 @@ class Solution {
             if(obj.find(edge[0]) == obj.find(edge[1])){
                 arr[0]=edge[0];
                 arr[1]=edge[1];
+                break;
             }
             else{
                 obj.Union(edge[0],edge[1]);
