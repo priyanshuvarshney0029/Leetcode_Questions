@@ -1,35 +1,39 @@
 class Solution {
     public int minimizeMax(int[] nums, int p) {
         Arrays.sort(nums);
-        int l = 0;
-        int h = nums[nums.length-1]-nums[0];
-        int ans = 0;
-        while(l<=h){
-            int m = l+(h-l)/2;
-            if(isPossible(nums,m,p)){
-                h = m-1;
-                ans = m;
-            }else{
-                l = m+1;
+        int low=0;
+        int high=nums[nums.length-1]-nums[0];
+        int ans=0;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(is_it_pos(nums,mid,p)){
+                ans=mid;
+                high=mid-1;
+
+            }
+            else{
+                low=mid+1;
             }
         }
         return ans;
     }
-    public boolean isPossible(int []nums,int m,int p){
-        int count = 0;
-        int i = 0;
+    public static boolean is_it_pos(int nums[],int mid,int p){
+        int count=0;
+        int i=0;
         while(i<nums.length-1){
-            if(nums[i+1]-nums[i]<=m){
-                i+=2;
+            if(nums[i+1]-nums[i]<=mid){
                 count++;
-            }else{
+                i=i+2;
+            }
+            else{
                 i++;
             }
-
-            if(count>=p){
-                return true;
-            }
         }
-        return false;
+        if(count>=p){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
