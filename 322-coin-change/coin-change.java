@@ -13,7 +13,7 @@ class Solution {
                }
             }
         }
-       System.out.println(dp[amount]);
+    //    System.out.println(dp[amount]);
        return  dp[amount]!=Integer.MAX_VALUE ?  dp[amount] :-1;
     }
 }
