@@ -9,10 +9,7 @@ class Solution {
                 arr[0]=i;
                 break;
             }
-            else{
-                map.put(nums[i],i);
-            }
-            
+            map.put(nums[i],i);
         }
       return  arr;
     }
