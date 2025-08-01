@@ -9,28 +9,25 @@
  */
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        return solve(root, p, q);
+        return solve(root,p,q);
     }
-    public TreeNode solve(TreeNode root, TreeNode p, TreeNode q) {
-        if (root == null) {
+    public TreeNode solve(TreeNode root,TreeNode p,TreeNode q){
+        if(root==null){
             return null;
         }
-        if (root == p || root == q) {
+        if(root==p || root==q){
             return root;
         }
-
-        TreeNode left = solve(root.left, p, q);
-        TreeNode right = solve(root.right, p, q);
-
-        if (left != null && right != null) {
-            // p and q found in different subtrees
+        TreeNode left  =  solve(root.left,p,q);
+        TreeNode right=solve(root.right,p,q);
+        if(left!=null && right!=null){
             return root;
-        } else if (left != null) {
-            // p or q found in left subtree
+        }
+       else if(left!=null){
             return left;
-        } else {
-            // p or q found in right subtree (could also be null)
-            return right;
         }
+       else{
+          return right;
+       }
     }
 }
