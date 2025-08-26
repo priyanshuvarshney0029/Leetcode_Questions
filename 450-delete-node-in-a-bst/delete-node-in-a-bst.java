@@ -28,7 +28,6 @@ class Solution {
             root.right= deleteNode(root.right,key);
         }
         if(root.val == key){
-            System.out.println(root.val);
              if(root.left==null && root.right==null){
                  return null;
              }
