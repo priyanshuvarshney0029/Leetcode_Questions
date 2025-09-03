@@ -1,9 +1,15 @@
 class Solution {
     public int countPrimes(int n) {
+        if(n==1 || n==0){
+            return 0;
+        }
         boolean prime[]=new boolean[n];
-        for(int i=2;i*i<=prime.length;i++){  //sqrt of n tak loop hain ye
-             if(prime[i]==false){
-                for(int j=2;j*i<prime.length;j++){
+        prime[0]=true; // not prime
+        prime[1]=true; // not prime
+
+        for(int i=2;i*i<prime.length;i++){
+            if(prime[i]==false){
+                for(int j=2;i*j<prime.length;j++){
                     prime[i*j]=true;
                 }
             }
@@ -15,5 +21,8 @@ class Solution {
             }
         }
         return count;
+
+
+
     }
 }
