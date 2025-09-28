@@ -1,30 +1,22 @@
 class Solution {
     public int maxUncrossedLines(int[] nums1, int[] nums2) {
-        int dp[][]=new int[nums1.length][nums2.length];
-        for(int arr[]:dp){
-            Arrays.fill(arr,-1);
-        }
-        return solve(nums1,nums2,0,0,dp);
+        return lcsbu(nums1,nums2);
     }
-    public static int solve(int nums1[],int nums2[],int i,int j,int dp[][]){
-        if(i==nums1.length){
-            return 0;
+      public static int lcsbu(int []s1,int [] s2){
+        int dp[][]=new int[s1.length+1][s2.length+1];
+        for(int i=1;i<dp.length;i++){
+            for(int j=1 ; j< dp[0].length;j++){
+                if(s1[i-1] == s2[j-1]){
+                    dp[i][j]=1+dp[i-1][j-1];
+                }
+                else{
+                    int f=dp[i-1][j];
+                    int s=dp[i][j-1];
+                    dp[i][j]=Math.max(f,s);
+                }
+            }
         }
-        if(j==nums2.length){
-            return 0;
-        }
-        int pick=0;
-        int nonpick=0;
-        if(dp[i][j]!=-1){
-            return dp[i][j];
-        }
-       if(nums1[i]==nums2[j]){
-             pick=1+solve(nums1,nums2,i+1,j+1,dp);
-       }
-       else{
-          nonpick=Math.max(solve(nums1,nums2,i,j+1,dp),solve(nums1,nums2,i+1,j,dp));
-       }
-       return dp[i][j]=Math.max(pick,nonpick);
-      
+        return dp[dp.length-1][dp[0].length-1];
     }
+    
 }
