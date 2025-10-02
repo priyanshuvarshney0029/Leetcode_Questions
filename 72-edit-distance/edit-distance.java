@@ -1,33 +1,32 @@
 class Solution {
     public int minDistance(String word1, String word2) {
-        int dp[][]=new int[word1.length()][word2.length()];
-        for(int ar[]:dp){
-            Arrays.fill(ar,-1);
-        }
-        return solve(word1,word2,0,0,dp);
+        
+        return botomup(word1,word2);
     }
-    public static int solve(String s,String t,int i,int j,int dp[][]){
-         if(s.length()==i){ // s wali khaali
-            return t.length()-j;
-         }
-         if(t.length()==j){
-            return s.length()-i;
-         }
-         if(dp[i][j]!=-1){
-            return dp[i][j];
-         }
-         int ans=0;
-         if(s.charAt(i)==t.charAt(j)){
-            ans=solve(s,t,i+1,j+1,dp);
-         }
-         else{
-            int D=solve(s,t,i+1,j,dp);
-            int I=solve(s,t,i,j+1,dp);
-            int R=solve(s,t,i+1,j+1,dp);
-            ans=Math.min(D,Math.min(I,R))+1;
-           dp[i][j]=ans;
-            
-         }
-         return ans;
+    public static int botomup(String s,String t){
+        int dp[][]=new int[s.length()+1][t.length()+1];
+        for(int i=1;i<dp[0].length;i++){
+            dp[0][i]=i;
+        }
+        for(int i=1;i<dp.length;i++){
+            dp[i][0]=i;
+        }
+        for(int i=1;i<dp.length;i++){
+            for(int j=1;j<dp[0].length;j++){
+                int ans=0;
+                if(s.charAt(i-1)==t.charAt(j-1)){
+                    ans=dp[i-1][j-1];
+                }
+                else{
+                    int D=dp[i-1][j];
+                    int I=dp[i][j-1];
+                    int R=dp[i-1][j-1];
+                     ans=Math.min(D,Math.min(I,R))+1;
+                }
+                 dp[i][j]=ans;
+            }
+        }
+        return dp[dp.length-1][dp[0].length-1];
+
     }
 }
