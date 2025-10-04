@@ -1,28 +1,32 @@
 class Solution {
     public int minFallingPathSum(int[][] matrix) {
-        int dp[][]=new int[matrix.length][matrix.length];
-        for(int arr[]:dp){
-            Arrays.fill(arr,-100000);
+        int n=matrix.length;
+        int dp[][]=new int[n][n];
+        
+        for(int col=0;col<n;col++){
+            dp[0][col]=matrix[0][col];
+        }
+        for(int row=1;row<n;row++){
+            for(int col=0;col<n;col++){
+                int ld=Integer.MAX_VALUE; 
+                int d=dp[row-1][col];
+                int rd=Integer.MAX_VALUE;
+
+                if(col-1 >=0){
+                    ld=dp[row-1][col-1];
+                }
+                if(col+1 < n){
+                    rd=dp[row-1][col+1];
+                }
+
+                dp[row][col]=matrix[row][col]+Math.min(ld,Math.min(rd,d));
+
+            }
         }
         int ans=Integer.MAX_VALUE;
-        for(int i=0;i<matrix[0].length;i++){
-            ans=Math.min(ans,solve(matrix,0,i,dp));
+        for(int col=0;col<n;col++){
+            ans=Math.min(ans,dp[n-1][col]);
         }
         return ans;
-    }
-    public static int solve(int grid[][],int cr,int cc,int dp[][]){
-        if(cc >= grid[0].length || cc < 0){
-            return Integer.MAX_VALUE;
-        }
-        if(cr==grid.length-1){
-            return grid[cr][cc];
-        }
-        if(dp[cr][cc]!=-100000){
-            return dp[cr][cc];
-        }
-        int ld=solve(grid,cr+1,cc-1,dp);
-        int d=solve(grid,cr+1,cc,dp);
-        int rd=solve(grid,cr+1,cc+1,dp);
-        return dp[cr][cc]=Math.min(ld,Math.min(d,rd))+grid[cr][cc];
     }
 }
