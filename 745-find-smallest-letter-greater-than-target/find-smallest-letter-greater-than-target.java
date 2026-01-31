@@ -1,21 +1,22 @@
 class Solution {
     public char nextGreatestLetter(char[] letters, char target) {
-         char ans=letters[0];
-
-         int low=0;
-         int high=letters.length-1;
-         while(low <=high){
+        int low=0;
+        int high=letters.length-1;
+        // char ans='\0';  // for null character we can take like that in java
+        char ans=letters[0];
+        while(low <= high){
             int mid=low+(high-low)/2;
-
-            char ch=letters[mid];
-            if(ch > target ){
-                 ans=ch;
+            int ch=(int) letters[mid];
+            int tar=(int) target;
+            if(ch > tar){
+                 ans=letters[mid];
                  high=mid-1;
             }
             else{
                 low=mid+1;
             }
-         }
-         return ans;
+        }
+        return ans;
+    
     }
 }
